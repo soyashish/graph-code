@@ -1,0 +1,1783 @@
+#include<bits/stdc++.h> 
+#define int long long   
+
+using namespace std;
+signed main()
+{   
+    RUN;
+    int test=1,z=1;
+   // cin>>test;
+    while(test--)
+    {  
+       int n,m;
+       cin>>n>>m;
+       vector< pair <int,int> > adj[n+10];   //(weighted graph input)
+       for(int i=0;i<m;i++)
+       {
+       	int x,y,weight;
+       	cin>>x>>y>>w;
+       	v[x].push_back({y,weight});
+       	v[y].push_back({x,weight});    // use when undirected graph
+       	
+	   }
+	    
+    }
+}
+
+*******************************************************************************************************************************************************************************************
+
+
+#include<bits/stdc++.h> 
+#define int long long   
+
+using namespace std;
+signed main()
+{   
+    RUN;
+    int test=1,z=1;
+   // cin>>test;
+    while(test--)
+    {  
+       int n,m;
+       cin>>n>>m;
+       vector<int> adj[n+10];    // normal graph input
+       for(int i=0;i<m;i++)
+       {
+       	int x,y,weight;
+       	cin>>x>>y>>w;
+       	v[x].push_back(y)
+       	v[y].push_back(x);    //use when undirected graph
+       	
+       }
+	    
+    }
+}
+
+*******************************************************************************************************************************************************************************************
+
+
+//count unconnected compotents check>>>>
+ 
+     vector<int>vis(n+1,0)
+     int count=0;
+     for(int i=1;i<=n;i++)
+     {
+        if(!vis[i])
+        {
+        	dfs(i);
+        	bfs(i);
+        	count++;
+	}
+	    
+    }
+    return count;
+
+
+********************************************************************************************************************************************************************************************
+
+
+// BFS TRAVERSAL  >>>>>   (BFS)
+      
+      vector<int>bfsofgraph(int V,vector<int>adj[])
+      {
+      	vector<int>bfs;
+      	vector<int>vis(V+1,0);
+      	
+      	for(int i=1;i<=V;i++)
+      	{
+      		if(!vis[i])
+      		{
+      			queue<int>q;
+      			vis[i]=1;
+      			q.push(i);
+      			while(!q.empty())
+      			{
+      				int node=q.front();
+      				q.pop();
+      				bfs.push_back(node);
+      				for(auto it:adj[node])
+      				{
+      					if(!vis[it])
+      					{
+      						q.push(it);
+      						vis[it]=1;
+						  }
+					  }
+				  }
+		    }
+		  }
+		  return bfs;
+	  }
+    }
+
+
+
+*******************************************************************************************************************************************************************************************
+
+
+
+/// DFS TRAVERSAL >>>>>>> (DFS)
+
+
+
+      
+      void dfs(int node,int<vector>adj[])
+      {
+      	vis[node]=1;
+      	for(auto x:adj[node])
+      	{
+      		if(!vis[x])
+      		{
+      			vis[x]=1;
+      			dfs(x);
+			  }
+		  }
+	  }
+
+
+*********************************************************************************************************************************************************************************************
+
+//CHECK CUYCLE DETECTIONS IN UNDIRECTED GRAPH USING BFS
+
+
+
+bool checkcycleusingbfs(int s,int V,vector<int>ad[])
+       {
+       	  queue<pair<int,int>>q;
+       	  int pre=-1;
+       	  vis[s]=1;
+       	  q.push({s,-1});
+       	  while(!q.empty())
+       	  {
+       	  	int node=q.front().first;
+       	  	int pre=q.front().second();
+       	  	q.pop();
+       	  	for(auto x:adj[node])
+       	  	{
+       	  		if(!vis(x))
+       	  		{
+       	  			q.push({x,node});
+       	  			vis[x]=1;
+					 }
+					 else if(x!=pre)
+					 return true;
+				 }
+			 }
+			 return false;
+       	  
+	   }
+
+
+***********************************************************************************************************************************************************
+
+ 
+ //checking cycle in undirected graph using dfs
+
+
+ bool checkcycleusingdfs(int node,int parent,vector<int>adj[])
+       {
+       	 vis[node]=1;
+       	 for(auto X: adj[node])
+       	 {   
+       	    if(!vis[X])
+       	    {
+       	 	if(checkcycleusingdfs(X,node,adj);
+       	 	return true;
+			}
+			else if(X!=parent)
+			return true;
+		}
+		return false;
+			
+	   }
+    }
+    //call>>>
+    bool ans;
+    ans=checkcycleusingdfs(i,-1,adj);
+    if(ans)
+    cout<<1;
+    else
+    cout<<0;
+}
+
+
+
+********************************************************************************************************************************************************************
+
+//    bipartite graph using bfs
+//   that graph clour exactly two colour such that no two adjusted colour have same colour
+ 
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool bipartiteBfs(int src, vector<int> adj[], int color[]) {
+    queue<int>q;
+    q.push(src); 
+    color[src] = 1; 
+    while(!q.empty()) {
+        int node = q.front(); 
+        q.pop();
+        
+        for(auto it : adj[node]) {
+            if(color[it] == -1) {
+                color[it] = 1 - color[node]; 
+                q.push(it); 
+            } else if(color[it] == color[node]) {
+                return false; 
+            }
+        }
+    }
+    return true; 
+}
+bool checkBipartite(vector<int> adj[], int n) {
+    int color[n];
+    memset(color, -1, sizeof color); 
+    for(int i = 0;i<n;i++) {
+        if(color[i] == -1) {
+            if(!bipartiteBfs(i, adj, color)) {
+                return false;
+            }
+        }
+    }
+    return true; 
+}
+int main() {
+	int n, m;
+	cin >> n >> m;
+	vector<int> adj[n];
+	for(int i = 0;i<m;i++) {
+	    int u, v;
+	    cin >> u >> v;
+	    adj[u].push_back(v); 
+	    adj[v].push_back(u); 
+	}
+	
+	if(checkBipartite(adj, n)) {
+	    cout << "yes"; 
+	} else {
+	    cout << "No"; 
+	}
+	return 0;
+}
+
+*****************************************************************************************************************************************************************************
+
+//    bipartite graph using dfs
+//   that graph clour exactly two colour such that no two adjusted colour have same colour
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool bipartiteDfs(int node, vector<int> adj[], int color[]) {
+    for(auto it : adj[node]) {
+        if(color[it] == -1) {
+            color[it] = 1 - color[node];
+            if(!bipartiteDfs(it, adj, color)) {
+                return false; 
+            }
+        } else if(color[it] == color[node]) return false; 
+    }
+    return true; 
+}
+bool checkBipartite(vector<int> adj[], int n) {
+    int color[n];
+    memset(color, -1, sizeof color); 
+    for(int i = 0;i<n;i++) {
+        if(color[i] == -1) {
+            color[i] = 1;
+            if(!bipartiteDfs(i, adj, color)) {
+                return false;
+            }
+        } 
+    }
+    return true; 
+}
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<int> adj[n];
+    for(int i = 0;i<m;i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v); 
+        adj[v].push_back(u); 
+    }
+    
+    if(checkBipartite(adj, n)) {
+        cout << "yes"; 
+    } else {
+        cout << "No"; 
+    }
+    return 0;
+}
+
+
+*****************************************************************************************************************************************************************************
+
+// cheack cycle in directed graph using dfs''''''''''
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+private:
+    bool checkCycle(int node, vector<int> adj[], int vis[], int dfsVis[]) {
+        vis[node] = 1; 
+        dfsVis[node] = 1; 
+        for(auto it : adj[node]) {
+            if(!vis[it]) {
+                if(checkCycle(it, adj, vis, dfsVis)) return true;
+            } else if(dfsVis[it]) {
+                return true; 
+            }
+        }
+        dfsVis[node] = 0; 
+        return false;
+    }
+public:
+	bool isCyclic(int N, vector<int> adj[]) {
+	   int vis[N], dfsVis[N]; 
+	   memset(vis, 0, sizeof vis); 
+	   memset(dfsVis, 0, sizeof dfsVis); 
+	   
+	   for(int i = 0;i<N;i++) {
+	       if(!vis[i]) {
+	           // cout << i << endl; 
+	           if(checkCycle(i, adj, vis, dfsVis)) {
+	               return true; 
+	           }
+	       }
+	   }
+	   return false; 
+	}
+};
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+    	vector<int> adj[V];
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.isCyclic(V, adj) << "\n";
+    }
+
+    return 0;
+}
+
+
+
+*****************************************************************************************************************************************************************************
+
+// TOPOLOGICAL SORT IN GRAPH USINF BFS
+U->V  // U COMES BEGORE OF V IN ORDERING
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+    void findTopoSortdfs(int node, vector<int> &vis, stack<int> &st, vector<int> adj[]) {
+        vis[node] = 1; 
+        
+        for(auto it : adj[node]) {
+            if(!vis[it]) {
+                findTopoSort(it, vis, st, adj); 
+            }
+        }
+        st.push(node); 
+    }
+	public:
+	vector<int> topoSort(int N, vector<int> adj[]) {
+	    stack<int> st; 
+	    vector<int> vis(N, 0); 
+	    for(int i = 0;i<N;i++) {
+	        if(vis[i] == 0) {
+	            findTopoSortdfs(i, vis, st, adj); 
+	        }
+	    }
+	    vector<int> topo;
+	    while(!st.empty()) {
+	        topo.push_back(st.top()); 
+	        st.pop(); 
+	    }
+	    return topo; 
+	    
+	}
+};
+
+
+
+**************************************************************************************************************************************************************************************** 
+
+ 
+
+//TOPOLOGICAL SORT USING BFS(KAN'S ALGORITHIM)
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+	vector<int> topo(int N, vector<int> adj[]) {
+        queue<int> q; 
+	    vector<int> indegree(N, 0); 
+	    for(int i = 0;i<N;i++) {
+	        for(auto it: adj[i]) {
+	            indegree[it]++; 
+	        }
+	    }
+	    
+	    for(int i = 0;i<N;i++) {
+	        if(indegree[i] == 0) {
+	            q.push(i); 
+	        }
+	    }
+	    vector<int> topo
+	    while(!q.empty()) {
+	        int node = q.front(); 
+	        q.pop(); 
+	        topo.push_back(node)
+	        for(auto it : adj[node]) {
+	            indegree[it]--;
+	            if(indegree[it] == 0) {
+	                q.push(it); 
+	            }
+	        }
+	    }
+	    return topo;
+	}
+};
+
+
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+
+    	vector<int> adj[V];
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.isCyclic(V, adj) << "\n";
+    }
+
+    return 0;
+}
+
+*******************************************************************************************************************************************************************************************
+
+
+//CYCLE DETECTIONS IN DIRECTED GRAPH USING BFS KAN'S ALGO
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+	bool isCyclic(int N, vector<int> adj[]) {
+        queue<int> q; 
+	    vector<int> indegree(N, 0); 
+	    for(int i = 0;i<N;i++) {
+	        for(auto it: adj[i]) {
+	            indegree[it]++; 
+	        }
+	    }
+	    
+	    for(int i = 0;i<N;i++) {
+	        if(indegree[i] == 0) {
+	            q.push(i); 
+	        }
+	    }
+	    int cnt = 0;
+	    while(!q.empty()) {
+	        int node = q.front(); 
+	        q.pop(); 
+	        cnt++; 
+	        for(auto it : adj[node]) {
+	            indegree[it]--;
+	            if(indegree[it] == 0) {
+	                q.push(it); 
+	            }
+	        }
+	    }
+	    if(cnt == N) return false; 
+	    return true; 
+	}
+};
+
+
+
+int main()
+{
+    
+    int t;
+    cin >> t;
+    while(t--)
+    {
+    	int V, E;
+    	cin >> V >> E;
+
+    	vector<int> adj[V];
+
+    	for(int i = 0; i < E; i++)
+    	{
+    		int u, v;
+    		cin >> u >> v;
+    		adj[u].push_back(v);
+    	}
+
+    	Solution obj;
+    	cout << obj.isCyclic(V, adj) << "\n";
+    }
+
+    return 0;
+}
+
+
+*******************************************************************************************************************************************************************
+
+// USIING BFS ALGORITHIM FIND SHORTEST PATH FROM A GIVEN SOURSE NODE
+
+
+
+void BFS(vector<int> adj[], int N, int src) 
+{ 
+	int dist[N];
+	for(int i = 0;i<N;i++) dist[i] = INT_MAX; 
+	queue<int>  q;
+	
+	dist[src] = 0;
+	q.push(src); 
+
+	while(q.empty()==false) 
+	{ 
+		int node = q.front(); 
+		q.pop();
+		 
+		for(auto it:adj[node]){
+		    if(dist[node] + 1 < dist[it]){
+		        dist[it]=dist[node]+1;
+		        q.push(it);
+		    }
+		} 
+	} 
+	for(int i = 0;i<N;i++) cout << dist[i] << " "; 
+	
+} 
+
+
+**************************************************************************************************************************************
+
+
+***********SHORTEST PATH IN DIRECTED ACYCLIC GRAPH  USING TOPO SORT***********(DAG)<<<<< gfg()
+
+
+
+
+
+// C++ program to find single source shortest paths for Directed Acyclic Graphs
+#include<iostream>
+#include <bits/stdc++.h>
+#define INF INT_MAX
+using namespace std;
+
+// Graph is represented using adjacency list. Every node of adjacency list
+// contains vertex number of the vertex to which edge connects. It also
+// contains weight of the edge
+class AdjListNode
+{
+	int v;
+	int weight;
+public:
+	AdjListNode(int _v, int _w) { v = _v; weight = _w;}
+	int getV()	 { return v; }
+	int getWeight() { return weight; }
+};
+
+// Class to represent a graph using adjacency list representation
+class Graph
+{
+	int V; // No. of vertices'
+
+	// Pointer to an array containing adjacency lists
+	list<AdjListNode> *adj;
+
+	// A function used by shortestPath
+	void topologicalSortUtil(int v, bool visited[], stack<int> &Stack);
+public:
+	Graph(int V); // Constructor
+
+	// function to add an edge to graph
+	void addEdge(int u, int v, int weight);
+
+	// Finds shortest paths from given source vertex
+	void shortestPath(int s);
+};
+
+Graph::Graph(int V)
+{
+	this->V = V;
+	adj = new list<AdjListNode>[V];
+}
+
+void Graph::addEdge(int u, int v, int weight)
+{
+	AdjListNode node(v, weight);
+	adj[u].push_back(node); // Add v to u's list
+}
+
+// A recursive function used by shortestPath. See below link for details
+// https://www.geeksforgeeks.org/topological-sorting/
+void Graph::topologicalSortUtil(int v, bool visited[], stack<int> &Stack)
+{
+	// Mark the current node as visited
+	visited[v] = true;
+
+	// Recur for all the vertices adjacent to this vertex
+	list<AdjListNode>::iterator i;
+	for (i = adj[v].begin(); i != adj[v].end(); ++i)
+	{
+		AdjListNode node = *i;
+		if (!visited[node.getV()])
+			topologicalSortUtil(node.getV(), visited, Stack);
+	}
+
+	// Push current vertex to stack which stores topological sort
+	Stack.push(v);
+}
+
+// The function to find shortest paths from given vertex. It uses recursive
+// topologicalSortUtil() to get topological sorting of given graph.
+void Graph::shortestPath(int s)
+{
+	stack<int> Stack;
+	int dist[V];
+
+	// Mark all the vertices as not visited
+	bool *visited = new bool[V];
+	for (int i = 0; i < V; i++)
+		visited[i] = false;
+
+	// Call the recursive helper function to store Topological Sort
+	// starting from all vertices one by one
+	for (int i = 0; i < V; i++)
+		if (visited[i] == false)
+			topologicalSortUtil(i, visited, Stack);
+
+	// Initialize distances to all vertices as infinite and distance
+	// to source as 0
+	for (int i = 0; i < V; i++)
+		dist[i] = INF;
+	dist[s] = 0;
+
+	// Process vertices in topological order
+	while (Stack.empty() == false)
+	{
+		// Get the next vertex from topological order
+		int u = Stack.top();
+		Stack.pop();
+
+		// Update distances of all adjacent vertices
+		list<AdjListNode>::iterator i;
+		if (dist[u] != INF)
+		{
+		for (i = adj[u].begin(); i != adj[u].end(); ++i)
+			if (dist[i->getV()] > dist[u] + i->getWeight())
+				dist[i->getV()] = dist[u] + i->getWeight();
+		}
+	}
+
+	// Print the calculated shortest distances
+	for (int i = 0; i < V; i++)
+		(dist[i] == INF)? cout << "INF ": cout << dist[i] << " ";
+}
+
+// Driver program to test above functions
+int main()
+{
+	// Create a graph given in the above diagram. Here vertex numbers are
+	// 0, 1, 2, 3, 4, 5 with following mappings:
+	// 0=r, 1=s, 2=t, 3=x, 4=y, 5=z
+	Graph g(6);
+	g.addEdge(0, 1, 5);
+	g.addEdge(0, 2, 3);
+	g.addEdge(1, 3, 6);
+	g.addEdge(1, 2, 2);
+	g.addEdge(2, 4, 4);
+	g.addEdge(2, 5, 2);
+	g.addEdge(2, 3, 7);
+	g.addEdge(3, 4, -1);
+	g.addEdge(4, 5, -2);
+
+	int s = 1;
+	cout << "Following are shortest distances from source " << s <<" n";
+	g.shortestPath(s);
+
+	return 0;
+}
+
+
+**************************************************************************************************************************************************************************************
+
+
+//Dijkstra's Algorithm  |  Shortest Path in Undirected Graphs
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	int n,m,source;
+	cin >> n >> m;
+	vector<pair<int,int> > g[n+1]; 	// 1-indexed adjacency list for of graph
+
+	int a,b,wt;
+	for(int i = 0; i<m ; i++){
+		cin >> a >> b >> wt;
+		g[a].push_back(make_pair(b,wt));
+		g[b].push_back(make_pair(a,wt));
+	}	
+	
+	cin >> source;
+	
+	// Dijkstra's algorithm begins from here
+	priority_queue<pair<int,int>,vector<pair<int,int> >,greater<pair<int,int> > > pq;// min-heap ; In pair => (dist,from)
+	vector<int> distTo(n+1,INT_MAX); 	// 1-indexed array for calculating shortest paths; 
+	
+	distTo[source] = 0;
+	pq.push(make_pair(0,source));	// (dist,from)
+	
+	while( !pq.empty() ){
+		int dist = pq.top().first;
+		int prev = pq.top().second;
+		pq.pop();
+		
+		vector<pair<int,int> >::iterator it;
+		for( it = g[prev].begin() ; it != g[prev].end() ; it++){
+			int next = it->first;
+			int nextDist = it->second;
+			if( distTo[next] > distTo[prev] + nextDist){
+				distTo[next] = distTo[prev] + nextDist;
+				pq.push(make_pair(distTo[next], next));
+			}
+		}
+		
+	}
+	
+	cout << "The distances from source, " << source << ", are : \n";
+	for(int i = 1 ; i<=n ; i++)	cout << distTo[i] << " ";
+	cout << "\n";
+	
+	return 0;
+}
+
+
+
+***********************************************************************************************************************************************************************
+
+
+//PRIM'S ALGORITHIM FIND MINIMUM SPPANNING TREE  (BRUTE FORCE)
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	int N,m;
+	cin >> N >> m;
+	vector<pair<int,int> > adj[N]; 
+
+	int a,b,wt;
+	for(int i = 0; i<m ; i++){
+		cin >> a >> b >> wt;
+		adj[a].push_back(make_pair(b,wt));
+		adj[b].push_back(make_pair(a,wt));
+	}	
+	
+	int parent[N]; 
+      
+    int key[N]; 
+      
+    bool mstSet[N]; 
+  
+    for (int i = 0; i < N; i++) 
+        key[i] = INT_MAX, mstSet[i] = false; 
+  
+
+    key[0] = 0; 
+    parent[0] = -1; 
+    int ansWeight = 0;
+    for (int count = 0; count < N - 1; count++)
+    { 
+        
+        int mini = INT_MAX, u; 
+  
+        for (int v = 0; v < N; v++) 
+            if (mstSet[v] == false && key[v] < mini) 
+                mini = key[v], u = v; 
+                
+        mstSet[u] = true; 
+        
+        for (auto it : adj[u]) {
+            int v = it.first;
+            int weight = it.second;
+            if (mstSet[v] == false && weight < key[v]) 
+                parent[v] = u, key[v] = weight; 
+        }
+            
+    } 
+    
+    
+    for (int i = 1; i < N; i++) 
+        cout << parent[i] << " - " << i <<" \n"; 
+	return 0;
+}
+
+********************************************************************************************************************************************************************************************
+
+
+//PRIM'S ALGO FOR MST   (nlogn)
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	int N,m;
+	cin >> N >> m;
+	vector<pair<int,int> > adj[N]; 
+
+	int a,b,wt;
+	for(int i = 0; i<m ; i++){
+		cin >> a >> b >> wt;
+		adj[a].push_back(make_pair(b,wt));
+		adj[b].push_back(make_pair(a,wt));
+	}	
+	
+	int parent[N]; 
+      
+    int key[N]; 
+      
+    bool mstSet[N]; 
+  
+    for (int i = 0; i < N; i++) 
+        key[i] = INT_MAX, mstSet[i] = false; 
+    
+    priority_queue< pair<int,int>, vector <pair<int,int>> , greater<pair<int,int>> > pq;
+
+    key[0] = 0; 
+    parent[0] = -1; 
+    pq.push({0, 0});
+    // Run the loop till all the nodes have been visited
+    // because in the brute code we checked for mstSet[node] == false while computing the minimum
+    // but here we simply take the minimal from the priority queue, so a lot of times a node might be taken twice
+    // hence its better to keep running till all the nodes have been taken. 
+    // try the following case: 
+    // Credits: Srejan Bera
+    // 6 7 
+    // 0 1 5 
+    // 0 2 10 
+    // 0 3 100 
+    // 1 3 50 
+    // 1 4 200
+    // 3 4 250
+    // 4 5 50 
+    while(!pq.empty())
+    { 
+        int u = pq.top().second; 
+        pq.pop(); 
+        
+        mstSet[u] = true; 
+        
+        for (auto it : adj[u]) {
+            int v = it.first;
+            int weight = it.second;
+            if (mstSet[v] == false && weight < key[v]) {
+                parent[v] = u;
+		key[v] = weight; 
+                pq.push({key[v], v});    
+            }
+        }
+            
+    } 
+    
+    for (int i = 1; i < N; i++) 
+        cout << parent[i] << " - " << i <<" \n"; 
+	return 0;
+}
+
+**************************************************************************************************************************************************************************
+
+
+//KURUSKUL'S ALGORITHIM FIND MST USING UNION AND FIND PARENT 
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+struct node {
+    int u;
+    int v;
+    int wt; 
+    node(int first, int second, int weight) {
+        u = first;
+        v = second;
+        wt = weight;
+    }
+};
+
+bool comp(node a, node b) {
+    return a.wt < b.wt; 
+}
+
+int findPar(int u, vector<int> &parent) {
+    if(u == parent[u]) return u; 
+    return parent[u] = findPar(parent[u], parent); 
+}
+
+void unionn(int u, int v, vector<int> &parent, vector<int> &rank) {
+    u = findPar(u, parent);
+    v = findPar(v, parent);
+    if(rank[u] < rank[v]) {
+    	parent[u] = v;
+    }
+    else if(rank[v] < rank[u]) {
+    	parent[v] = u; 
+    }
+    else {
+    	parent[v] = u;
+    	rank[u]++; 
+    }
+}
+int main(){
+	int N,m;
+	cin >> N >> m;
+	vector<node> edges; 
+	for(int i = 0;i<m;i++) {
+	    int u, v, wt;
+	    cin >> u >> v >> wt; 
+	    edges.push_back(node(u, v, wt)); 
+	}
+	sort(edges.begin(), edges.end(), comp); 
+	
+	vector<int> parent(N);
+	for(int i = 0;i<N;i++) 
+	    parent[i] = i; 
+	vector<int> rank(N, 0); 
+	
+	int cost = 0;
+	vector<pair<int,int>> mst; 
+	for(auto it : edges) {
+	    if(findPar(it.v, parent) != findPar(it.u, parent)) {
+	        cost += it.wt; 
+	        mst.push_back({it.u, it.v}); 
+	        unionn(it.u, it.v, parent, rank); 
+	    }
+	}
+	cout << cost << endl;
+	for(auto it : mst) cout << it.first << " - " << it.second << endl; 
+	return 0;
+}
+
+
+
+********************************************************************************************************************************************
+
+
+
+
+SIZE OF SUBTREE USING DFS------>>>>>>
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> ar[100001];
+int vis[100001] , subSize[100001];
+
+int dfs(int node)
+{
+	vis[node] = 1;
+	int curr = 1;
+	
+	for(int child : ar[node])
+	if(vis[child] == 0)
+	{
+		curr += dfs(child);
+	}
+	
+	return subSize[node] = curr;
+}
+
+int main() {
+	int n , a , b; // n = number of nodes
+	
+	cin>>n;
+	for(int i=1;i<n;i++)	//for tree edges = n-1
+	cin>>a>>b , ar[a].push_back(b) , ar[b].push_back(a);
+	
+	//call dfs(1) when 1 is root , if another node is root than pass that node
+	dfs(1);
+	
+	for(int i=1;i<=n;i++)
+	cout<<"sub tree size of node "<<i<<" is "<<subSize[i]<<endl;
+	return 0;
+}
+
+**********************************************************************************************************************************************
+
+
+
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+
+// kan's algorithim using topo sort>>>>>>>
+
+
+vector<int>adj[1001];
+int indegree[1001];
+vector<int>toposort;
+void kans(int node)
+{   
+    queue<int>q;
+    for(int i=1;i<=node;i++)
+    {
+        if(indegree[i]==0)
+        q.push(i);
+    }
+    while(!q.empty())
+    {
+        int curr=q.front();
+        q.pop();
+        toposort.pb(curr);
+        for(auto x:adj[curr])
+        {
+            indegree[x]--;
+            if(indegree[x]==0)
+            q.push(x);
+        }
+    }
+    for(int i=0;i<toposort.size();i++)
+    cout<<toposort[i]<<" ";
+    cout<<"\n";
+}
+signed main()
+{   
+    RUN;
+    int test=1,x=1;
+    //cin>>test;
+    while(test--)
+    {    
+       int n,m;
+       cin>>n>>m;
+       int u,v;
+       for(int i=1;i<=m;i++)
+       {
+           cin>>u>>v;
+           adj[u].pb(v);
+           indegree[v]++;
+       }
+       kans(n);
+    }
+}
+
+
+
+
+*****************************************************************************************************************************************************
+
+
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+bool vis[1001][1001];
+// DFS ON GRID>>>>>>>>>>>>
+int n,m;
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+bool isvalid (int x,int y)
+{
+    if(x>n||x<1||y<1||y>m)
+    return false;
+    if(vis[x][y])
+    return false;
+    return true;
+}
+void dfs(int x,int y)
+{    
+    vis[x][y]=true;
+    cout<<x<<" "<<y<<"\n";
+    for(int i=0;i<4;i++)
+    {
+        if(isvalid(x+dx[i],y+dy[i]))
+        dfs(x+dx[i],y+dy[i]);
+    }
+    // if(isvalid(x-1,y))
+    // dfs(x-1,y);
+    // if(isvalid(x,y+1))
+    // dfs(x,y+1);
+    // if(isvalid(x+1,y))
+    // dfs(x+1,y);
+    // if(isvalid(x,y-1))
+    // dfs(x,y-1);
+}
+signed main()
+{   
+    RUN;
+    int test=1,x=1;
+    //cin>>test;
+    while(test--)
+    { 
+       cin>>n>>m;
+       dfs(1,1);
+    }
+}
+
+
+********************************************************************************************************************************************
+
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+bool vis[1001][1001];
+int a[1001][1001];
+// DFS ON GRID>>>>>>>>>>>>// COUNT CONNECTED COMPONENENT IN 2D GRID
+int n,m;
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+bool isvalid (int x,int y)
+{
+    if(x>n||x<1||y<1||y>m)
+    return false;
+    if(vis[x][y] || a[x][y]==0)
+    return false;
+    return true;
+}
+void dfs(int x,int y)
+{    
+    vis[x][y]=true;
+   // cout<<x<<" "<<y<<"\n";
+    for(int i=0;i<4;i++)
+    {
+        if(isvalid(x+dx[i],y+dy[i]))
+        dfs(x+dx[i],y+dy[i]);
+    }
+    // if(isvalid(x-1,y))
+    // dfs(x-1,y);
+    // if(isvalid(x,y+1))
+    // dfs(x,y+1);
+    // if(isvalid(x+1,y))
+    // dfs(x+1,y);
+    // if(isvalid(x,y-1))
+    // dfs(x,y-1);
+}
+signed main()
+{   
+    RUN;
+    int test=1,x=1;
+    //cin>>test;
+    while(test--)
+    { 
+       cin>>n>>m;
+       for(int i=1;i<=n;i++)
+       {
+           for(int j=1;j<=m;j++)
+           cin>>a[i][j];
+       }
+       int cc=0;
+       for(int i=1;i<=n;i++)
+       {
+           for(int j=1;j<=m;j++)
+           {
+               if(a[i][j]==1 && vis[i][j]==false)
+               {
+                   cc++;
+                   dfs(i,j);
+               }
+           }
+       }
+      cout<<cc;
+    }
+}
+
+
+
+
+
+********************************************************************************************************************************************
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+bool vis[1001][1001];
+char a[1001][1001];
+int dis[1001][1001];
+
+// BFS ON GRID>>>>>>>>>>>>
+
+int n,m;
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+bool isvalid (int x,int y)
+{
+    if(x>n||x<1||y<1||y>m)
+    return false;
+    if(vis[x][y])
+    return false;
+    return true;
+}
+void bfs(int x,int y)
+{    
+    vis[x][y]=true;
+    queue<pair<int,int>>q;
+    q.push({x,y});
+    dis[x][y]=0;
+    while(!q.empty())
+    {
+        int cx=q.front().first;
+        int cy=q.front().second;
+        q.pop();
+        for(int i=0;i<4;i++)
+        {
+            if(isvalid(cx+dx[i],cy+dy[i]))
+            {
+                int nx=cx+dx[i];
+                int ny=cy+dy[i];
+                dis[nx][ny]=dis[cx][cy]+1;
+                vis[nx][ny]=1;
+                q.push({nx,ny});
+            }
+        }
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=m;j++)
+        cout<<dis[i][j]<<" ";
+        cout<<"\n"; 
+    }
+}
+signed main()
+{   
+    RUN;
+    int test=1,x=1;
+    //cin>>test;
+    while(test--)
+    { 
+       cin>>n>>m;
+       int x,y;
+       cin>>x>>y;
+       bfs(x,y);
+    }
+}
+
+
+**************************************************************************************************************************************************
+
+
+#include <iostream>
+#include<bits/stdc++.h> 
+using namespace std;
+
+int main() {
+	//DISJOINT SET----
+	//PSEUDO CODE OF FIND(N) FIUCTION
+	
+	find(n)
+	{
+	    if(n==parent[n])
+	    return n;
+	    else
+	    n=parent[n];
+	}
+	
+	
+	
+	
+	//PSEUDO CODE FOR UNION SET----
+	
+	union(a,b)
+	{
+	    a=find(a);
+	    b=find(b);
+	    if(a==b)
+	    return ;
+	    else
+	    parent[a]=b;
+	}
+}
+
+*********************************************************************************************************************************************
+
+//DISJOINT SET COUNT NUMBERS OF CHOOSEING LEADERS
+
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+int parent[100001];
+int find(int a)
+{
+    while(parent[a]>0)
+    a=parent[a];
+    return a;
+}
+void Union(int a,int b)
+{
+    parent[a]+=parent[b];
+    parent[b]=a;
+    
+}
+signed main()
+{   
+    RUN;
+    int test=1;
+   // cin>>test;
+    while(test--)
+    { 
+       int n,m;
+       cin>>n>>m;
+       for(int i=1;i<=n;i++)
+       parent[i]=-1;
+       int a,b;
+       while(m--)
+       {
+           cin>>a>>b;
+           a=find(a);
+           b=find(b);
+           if(a!=b)
+           Union(a,b);
+       }
+       int ans=1;
+       for(int i=1;i<=n;i++)
+       {
+           if(parent[i]<0)
+           ans=(ans*abs(parent[i]))%mod;
+       }
+       cout<<ans;
+    }
+}
+
+
+
+**********************************************************************************************************************************************
+
+
+// MINIMUM SPPANNING TREE KURUSKUKL'S ALOGO
+
+
+
+#pragma GCC optimize ("O3")
+#pragma GCC target ("sse4")
+#pragma GCC optimize("Ofast")
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+#define mod 1000000007
+#define yes cout<< "YES"<<endl
+#define no  cout<< "NO"<<endl
+#define all(v) (v).begin(),(v).end()
+#define se second
+#define fi first
+#define pb push_back
+#define r(v) reverse(v,v+n)
+#define sr(v) sort(v,v+n)
+#define le length
+#define read(a,n) for(int i=0;i<n;i++)cin>>a[i]
+#define print(a,n) for(int i=0;i<n;i++)cout<<a[i]<<" "
+
+#define RUN ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define debug(output) cout<<#output<<"="<<output<<endl
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+int parent[1000001];
+struct edge
+{
+    int u;
+    int v;
+    int w;
+};
+bool comp(edge a,edge b)
+{
+    if(a.w<b.w)
+    return true;
+    return false;
+}
+int find(int a)
+{
+    if(parent[a]==-1)
+    return a;
+    return parent[a]=find(parent[a]);
+}
+void merge(int a,int b)
+{
+    parent[a]=b;
+}
+edge ar[1000001];
+signed main()
+{   
+    RUN;
+    int test=1;
+    //cin>>test;
+    while(test--)
+    { 
+         int n,m;
+         cin>>n>>m;
+         for(int i=1;i<=n;i++)
+         parent[i]=-1;
+         int u,v,w;
+         for(int i=0;i<m;i++)
+         {
+             cin>>ar[i].u>>ar[i].v>>ar[i].w;
+         }
+         sort(ar,ar+m,comp);
+         int ans=0;
+         for(int i=0;i<m;i++)
+         {
+             u=find(ar[i].u);
+             v=find(ar[i].v);
+             if(u!=v)
+             {
+                 ans+=ar[i].w;
+                 merge(u,v);
+             }
+         }
+         cout<<ans;
+    }
+}
+***********************************************************************************************************************************************
+
+
+#include <iostream>
+#include<bits/stdc++.h> 
+using namespace std;
+
+int main() {
+
+	//PSEUDO CODE OF LCA 
+	 
+	 int lca (int a,int b)
+	 {
+	     int d=level[b]-level[a];
+	     while(d>0)
+	     {
+	         d--;
+	         b=parent[b];
+	     }
+	     if(a==b)
+	     return a;
+	     while(parent[a]!=parent[b])
+	     {
+	         a=parent[a],b=parent[b];
+	     }
+	     return parent[a];
+	 }
+	
+	
+}
+*********************************************************************************************************************************************
+
+
+
+#include <iostream>
+#include<bits/stdc++.h> 
+using namespace std;
+// MINIMUM DISTANCE BETWEEN TWO NODES IN TREE IN (LOG(N)) TIME
+const int maxn=25;
+std::vector<int>adj[100001];
+int level[100001],LCA[100001][maxn+1];
+int getlca(int a,int b)
+{
+    if(level[a]>level[b])
+    swap(a,b);
+    int d=level[b]-level[a];
+    while(d>0)
+    {
+        int i=log2(d);
+        b=LCA[b][i];
+        d=d-(1<<i);
+    }
+    if(a==b)
+    return a;
+    for(int i=maxn;i>=0;i--)
+    {
+        if(LCA[a][i]!=-1 && LCA[a][i]!=LCA[b][i])
+        {
+            a=LCA[a][i];
+            b=LCA[b][i];
+        }
+    }
+    return LCA[a][0];
+}
+int getdis(int a,int b)
+{
+    int lca=getlca(a,b);
+    int dis=level[b]+level[a]-2*level[lca];
+    return dis;
+}
+void dfs(int node,int lvl,int par)
+{
+    level[node]=lvl;
+    LCA[node][0]=par;
+    for(int x:adj[node])
+    {
+        if(x!=par)
+        dfs(x,lvl+1,node);
+    }
+    
+}
+void init(int n)
+{
+    dfs(1,0,-1);
+    
+    for(int i=1;i<=maxn;i++)
+    {
+        for(int j=1;j<=n;j++)
+        {
+            if(LCA[j][i-1]!=-1)
+            {
+                int par=LCA[j][i-1];
+                LCA[j][i]=LCA[par][i-1];
+            }
+        }
+    }
+}
+
+
+int main() {
+      
+      int n;
+      cin>>n;
+      int q;
+      cin>>q;
+      for(int i=0;i<=n;i++)
+      {
+          for(int j=0;j<=maxn;j++)
+          LCA[i][j]=-1;
+      }
+      int u,v;
+      for(int i=0;i<n-1;i++)
+      {
+          cin>>u>>v;
+          adj[u].push_back(v);
+          adj[v].push_back(u);
+      }
+      init(n);
+      while(q--)
+      {
+          int a,b;
+          cin>>a>>b;
+          int ans=getdis(a,b);
+          if(ans%2==0)
+          cout<<"Town\n";
+          else
+          cout<<"Road\n";
+          //cout<<ans<<"\n";
+      }
+	 
+}
+
+***********************************************************************************************************************************************	
+
+#include<bits/stdc++.h> 
+
+#define int long long   
+//vector<pair<int,int>> moves = {{-1,0}, {1,0}, {0,-1}, {0,1}}; //LRDU
+using namespace std;
+vector<pair<int,int>>adj[100001];
+
+//DIJSKTRA'S ALOGORITH FOR WEIGHTED SHORTEST PATH
+signed main()
+{   
+
+    int test=1;
+   // cin>>test;
+    while(test--)
+    { 
+        int n,m;
+        cin>>n>>m;
+        for(int i=0;i<m;i++)
+        {
+            int u,v,w;
+            cin>>u>>v>>w;
+            adj[u].push_back({v,w});
+            adj[v].push_back({u,w});
+        }
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int> > >pq;
+        vector<int>dist(n+10,100001);
+        pq.push({0,1});
+        dist[1]=0;
+        while(!pq.empty())
+        {
+            int curr=pq.top().second;
+            int curr_d=pq.top().first;
+            pq.pop();
+            for(pair<int,int>edge :adj[curr])
+            {
+                if(curr_d+edge.second<dist[edge.first])
+                {
+                    dist[edge.first]=curr_d+edge.second;
+                    pq.push({dist[edge.first],edge.first});
+                }
+            }
+        }
+        for(int i=1;i<=n;i++)
+        {
+            cout<<dist[i]<<"\n";
+        }
+    }
+    
+}
+
+*************************************************************************************************************************************************
+
